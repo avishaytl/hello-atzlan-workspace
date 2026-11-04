@@ -8,6 +8,7 @@ import { ActivityTimeline } from "@/components/shared/activity-timeline";
 import { WorkspaceMenu } from "./workspace-menu";
 import { useWorkspaceActions } from "@/hooks/use-workspace-actions";
 import { useAppStore } from "@/stores/app-store";
+import { useShallow } from "zustand/react/shallow";
 import { sampleChanges } from "@/data/mock";
 import { timeAgo } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -37,10 +38,10 @@ function QuickAction({ icon, label, onClick, loading, primary }: { icon: React.R
 
 export function WorkspaceInspector({ w }: { w: Workspace }) {
   const a = useWorkspaceActions();
-  const activity = useAppStore((s) => s.activity.filter((e) => e.workspaceId === w.id).slice(0, 5));
+  const activity = useAppStore(useShallow((s) => s.activity.filter((e) => e.workspaceId === w.id).slice(0, 5)));
   const repo = useAppStore((s) => s.repositories.find((r) => r.id === w.repositoryId));
   const project = useAppStore((s) => s.projects.find((p) => p.id === w.projectId));
-  const sessions = useAppStore((s) => s.sessions.filter((x) => x.workspaceId === w.id && x.status !== "archived"));
+  const sessions = useAppStore(useShallow((s) => s.sessions.filter((x) => x.workspaceId === w.id && x.status !== "archived")));
   const running = sessions.find((x) => x.status === "running");
 
   return (

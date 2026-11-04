@@ -10,7 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivityRouteImport } from './routes/activity'
+import { Route as ClaudeRouteImport } from './routes/claude'
 import { Route as OverviewRouteImport } from './routes/overview'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TasksRouteImport } from './routes/tasks'
+import { Route as IntegrationsIndexRouteImport } from './routes/integrations.index'
+import { Route as IntegrationsIntegrationIdRouteImport } from './routes/integrations.$integrationId'
+import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
+import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
 import { Route as WorkspacesIndexRouteImport } from './routes/workspaces.index'
 import { Route as WorkspacesWorkspaceIdRouteImport } from './routes/workspaces.$workspaceId'
 
@@ -19,9 +27,50 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ActivityRoute = ActivityRouteImport.update({
+  id: '/activity',
+  path: '/activity',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClaudeRoute = ClaudeRouteImport.update({
+  id: '/claude',
+  path: '/claude',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const OverviewRoute = OverviewRouteImport.update({
   id: '/overview',
   path: '/overview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsIndexRoute = IntegrationsIndexRouteImport.update({
+  id: '/integrations/',
+  path: '/integrations/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegrationsIntegrationIdRoute =
+  IntegrationsIntegrationIdRouteImport.update({
+    id: '/integrations/$integrationId',
+    path: '/integrations/$integrationId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
+  id: '/projects/',
+  path: '/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
+  id: '/projects/$projectId',
+  path: '/projects/$projectId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WorkspacesIndexRoute = WorkspacesIndexRouteImport.update({
@@ -37,36 +86,104 @@ const WorkspacesWorkspaceIdRoute = WorkspacesWorkspaceIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/claude': typeof ClaudeRoute
   '/overview': typeof OverviewRoute
+  '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
+  '/integrations/$integrationId': typeof IntegrationsIntegrationIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRoute
+  '/integrations/': typeof IntegrationsIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
   '/workspaces/': typeof WorkspacesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/claude': typeof ClaudeRoute
   '/overview': typeof OverviewRoute
+  '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
+  '/integrations/$integrationId': typeof IntegrationsIntegrationIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRoute
+  '/integrations': typeof IntegrationsIndexRoute
+  '/projects': typeof ProjectsIndexRoute
   '/workspaces': typeof WorkspacesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activity': typeof ActivityRoute
+  '/claude': typeof ClaudeRoute
   '/overview': typeof OverviewRoute
+  '/settings': typeof SettingsRoute
+  '/tasks': typeof TasksRoute
+  '/integrations/$integrationId': typeof IntegrationsIntegrationIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRoute
+  '/integrations/': typeof IntegrationsIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
   '/workspaces/': typeof WorkspacesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/overview' | '/workspaces/$workspaceId' | '/workspaces/'
+  fullPaths:
+    | '/'
+    | '/activity'
+    | '/claude'
+    | '/overview'
+    | '/settings'
+    | '/tasks'
+    | '/integrations/$integrationId'
+    | '/projects/$projectId'
+    | '/workspaces/$workspaceId'
+    | '/integrations/'
+    | '/projects/'
+    | '/workspaces/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/overview' | '/workspaces/$workspaceId' | '/workspaces'
+  to:
+    | '/'
+    | '/activity'
+    | '/claude'
+    | '/overview'
+    | '/settings'
+    | '/tasks'
+    | '/integrations/$integrationId'
+    | '/projects/$projectId'
+    | '/workspaces/$workspaceId'
+    | '/integrations'
+    | '/projects'
+    | '/workspaces'
   id:
-    '__root__' | '/' | '/overview' | '/workspaces/$workspaceId' | '/workspaces/'
+    | '__root__'
+    | '/'
+    | '/activity'
+    | '/claude'
+    | '/overview'
+    | '/settings'
+    | '/tasks'
+    | '/integrations/$integrationId'
+    | '/projects/$projectId'
+    | '/workspaces/$workspaceId'
+    | '/integrations/'
+    | '/projects/'
+    | '/workspaces/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivityRoute: typeof ActivityRoute
+  ClaudeRoute: typeof ClaudeRoute
   OverviewRoute: typeof OverviewRoute
+  SettingsRoute: typeof SettingsRoute
+  TasksRoute: typeof TasksRoute
+  IntegrationsIntegrationIdRoute: typeof IntegrationsIntegrationIdRoute
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
   WorkspacesWorkspaceIdRoute: typeof WorkspacesWorkspaceIdRoute
+  IntegrationsIndexRoute: typeof IntegrationsIndexRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
   WorkspacesIndexRoute: typeof WorkspacesIndexRoute
 }
 
@@ -79,11 +196,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activity': {
+      id: '/activity'
+      path: '/activity'
+      fullPath: '/activity'
+      preLoaderRoute: typeof ActivityRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/claude': {
+      id: '/claude'
+      path: '/claude'
+      fullPath: '/claude'
+      preLoaderRoute: typeof ClaudeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/overview': {
       id: '/overview'
       path: '/overview'
       fullPath: '/overview'
       preLoaderRoute: typeof OverviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations/': {
+      id: '/integrations/'
+      path: '/integrations'
+      fullPath: '/integrations/'
+      preLoaderRoute: typeof IntegrationsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integrations/$integrationId': {
+      id: '/integrations/$integrationId'
+      path: '/integrations/$integrationId'
+      fullPath: '/integrations/$integrationId'
+      preLoaderRoute: typeof IntegrationsIntegrationIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/': {
+      id: '/projects/'
+      path: '/projects'
+      fullPath: '/projects/'
+      preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
+      path: '/projects/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/workspaces/': {
@@ -105,8 +278,16 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivityRoute: ActivityRoute,
+  ClaudeRoute: ClaudeRoute,
   OverviewRoute: OverviewRoute,
+  SettingsRoute: SettingsRoute,
+  TasksRoute: TasksRoute,
+  IntegrationsIntegrationIdRoute: IntegrationsIntegrationIdRoute,
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute,
   WorkspacesWorkspaceIdRoute: WorkspacesWorkspaceIdRoute,
+  IntegrationsIndexRoute: IntegrationsIndexRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
   WorkspacesIndexRoute: WorkspacesIndexRoute,
 }
 export const routeTree = rootRouteImport

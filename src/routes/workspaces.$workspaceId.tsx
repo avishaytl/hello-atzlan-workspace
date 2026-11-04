@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ChevronRight, Code2, Copy, Diamond, FolderGit2, Loader2, Plus, RotateCcw, Terminal, GitCommitHorizontal } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import { useWorkspaceActions } from "@/hooks/use-workspace-actions";
 import { useAction } from "@/hooks/use-action";
 import { services } from "@/services/mocks";
 import { useAppStore } from "@/stores/app-store";
+import { useShallow } from "zustand/react/shallow";
 import { sampleChanges, sampleTree } from "@/data/mock";
 import { timeAgo } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -26,7 +27,7 @@ const TABS = ["overview", "claude", "git", "files", "activity", "settings"] as c
 type Tab = (typeof TABS)[number];
 
 export const Route = createFileRoute("/workspaces/$workspaceId")({
-  validateSearch: (s: Record<string, unknown>): { tab?: Tab } => ({ tab: TABS.includes(s.tab as Tab) ? (s.tab as Tab) : undefined }),
+  validateSearch: (s: Record<string, unknown>): { tab?: Tab } => ({ tab: TABS.includes(s["tab"] as Tab) ? (s["tab"] as Tab) : undefined }),
   head: () => ({
     meta: [
       { title: "Workspace · hello atzlan" },
@@ -97,12 +98,12 @@ function Card({ title, children, className }: { title: string; children: React.R
   return <section className={cn("rounded-2xl border bg-card p-5 shadow-card", className)}><h2 className="mb-3 text-[15px] font-semibold">{title}</h2>{children}</section>;
 }
 function KV({ items }: { items: [string, React.ReactNode][] }) {
-  return <dl className="grid grid-cols-[130px_1fr] gap-y-2 text-[13px]">{items.map(([k, v]) => <><dt key={k} className="text-muted-foreground">{k}</dt><dd key={k + "v"} className="min-w-0 truncate">{v}</dd></>)}</dl>;
+  return <dl className="grid grid-cols-[130px_1fr] gap-y-2 text-[13px]">{items.map(([k, v]) => <Fragment key={k}><dt className="text-muted-foreground">{k}</dt><dd className="min-w-0 truncate">{v}</dd></Fragment>)}</dl>;
 }
 
 function OverviewTab({ w }: { w: Workspace }) {
   const a = useWorkspaceActions();
-  const sessions = useAppStore((s) => s.sessions.filter((x) => x.workspaceId === w.id));
+  const sessions = useAppStore(useShallow((s) => s.sessions.filter((x) => x.workspaceId === w.id)));
   const latest = [...sessions].sort((x, y) => y.updatedAt.localeCompare(x.updatedAt))[0];
   return (
     <div className="grid gap-4 lg:grid-cols-2">
@@ -129,7 +130,7 @@ function OverviewTab({ w }: { w: Workspace }) {
 }
 
 function ClaudeTab({ w }: { w: Workspace }) {
-  const sessions = useAppStore((s) => s.sessions.filter((x) => x.workspaceId === w.id));
+  const sessions = useAppStore(useShallow((s) => s.sessions.filter((x) => x.workspaceId === w.id)));
   const { pending, run } = useAction();
   return (
     <div>
@@ -146,7 +147,7 @@ function ClaudeTab({ w }: { w: Workspace }) {
 }
 
 function ActivityTab({ w }: { w: Workspace }) {
-  const events = useAppStore((s) => s.activity.filter((e) => e.workspaceId === w.id));
+  const events = useAppStore(useShallow((s) => s.activity.filter((e) => e.workspaceId === w.id)));
   const [kind, setKind] = useState<ActivityKind | "all">("all");
   const list = events.filter((e) => kind === "all" || e.kind === kind);
   return (
