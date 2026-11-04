@@ -9,6 +9,7 @@ import { CommandPalette } from "./command-palette";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
 import { NewWorkspaceWizard } from "@/components/workspaces/new-workspace-wizard";
 import { cn } from "@/lib/utils";
+import { LoadingSkeleton } from "@/components/shared/states";
 
 function useThemeSync() {
   const theme = useAppStore((s) => s.prefs.theme);
@@ -39,6 +40,7 @@ function useResponsiveSidebar() {
 export function AppShell({ children }: { children: React.ReactNode }) {
   const setHydrated = useUI((s) => s.setHydrated);
   const density = useAppStore((s) => s.prefs.density);
+  const hydrated = useUI((s) => s.hydrated);
   useEffect(() => {
     Promise.resolve(useAppStore.persist.rehydrate()).then(setHydrated);
   }, [setHydrated]);
@@ -51,7 +53,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <AppSidebar />
         <div className="flex min-w-0 flex-1 flex-col">
           <TopToolbar />
-          <main className="min-h-0 flex-1 overflow-y-auto px-6 pt-6 pb-10">{children}</main>
+          <main className="min-h-0 flex-1 overflow-y-auto px-6 pt-6 pb-10">
+            {hydrated ? children : <div className="mx-auto max-w-[1600px] space-y-4"><div className="h-10 w-72 animate-pulse rounded-xl bg-secondary" /><LoadingSkeleton rows={6} /></div>}
+          </main>
         </div>
       </div>
       <CommandPalette />
