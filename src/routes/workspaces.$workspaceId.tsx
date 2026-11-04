@@ -17,6 +17,7 @@ import { useWorkspaceActions } from "@/hooks/use-workspace-actions";
 import { useAction } from "@/hooks/use-action";
 import { services } from "@/services/mocks";
 import { useAppStore } from "@/stores/app-store";
+import { useShallow } from "zustand/react/shallow";
 import { sampleChanges, sampleTree } from "@/data/mock";
 import { timeAgo } from "@/lib/format";
 import { cn } from "@/lib/utils";
@@ -102,7 +103,7 @@ function KV({ items }: { items: [string, React.ReactNode][] }) {
 
 function OverviewTab({ w }: { w: Workspace }) {
   const a = useWorkspaceActions();
-  const sessions = useAppStore((s) => s.sessions.filter((x) => x.workspaceId === w.id));
+  const sessions = useAppStore(useShallow((s) => s.sessions.filter((x) => x.workspaceId === w.id)));
   const latest = [...sessions].sort((x, y) => y.updatedAt.localeCompare(x.updatedAt))[0];
   return (
     <div className="grid gap-4 lg:grid-cols-2">
@@ -129,7 +130,7 @@ function OverviewTab({ w }: { w: Workspace }) {
 }
 
 function ClaudeTab({ w }: { w: Workspace }) {
-  const sessions = useAppStore((s) => s.sessions.filter((x) => x.workspaceId === w.id));
+  const sessions = useAppStore(useShallow((s) => s.sessions.filter((x) => x.workspaceId === w.id)));
   const { pending, run } = useAction();
   return (
     <div>
@@ -146,7 +147,7 @@ function ClaudeTab({ w }: { w: Workspace }) {
 }
 
 function ActivityTab({ w }: { w: Workspace }) {
-  const events = useAppStore((s) => s.activity.filter((e) => e.workspaceId === w.id));
+  const events = useAppStore(useShallow((s) => s.activity.filter((e) => e.workspaceId === w.id)));
   const [kind, setKind] = useState<ActivityKind | "all">("all");
   const list = events.filter((e) => kind === "all" || e.kind === kind);
   return (
