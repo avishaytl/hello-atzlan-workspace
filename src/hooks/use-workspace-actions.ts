@@ -17,7 +17,7 @@ export function useWorkspaceActions() {
     createPR: (w: Workspace) => run(`pr:${w.id}`, () => services.platform.createPullRequest(w.id)),
     copyPath: (w: Workspace) => run(`copy:${w.id}`, () => services.platform.copyToClipboard(w.worktreePath), "Worktree path copied"),
     copy: (text: string, label = "Copied") => run(`copy:${text}`, () => services.platform.copyToClipboard(text), label),
-    open: (w: Workspace, tab?: string) => navigate({ to: "/workspaces/$workspaceId", params: { workspaceId: w.id }, search: tab ? { tab } : {} }),
+    open: (w: Workspace, tab?: "overview" | "claude" | "git" | "files" | "activity" | "settings") => navigate({ to: "/workspaces/$workspaceId", params: { workspaceId: w.id }, search: tab ? { tab } : {} }),
     viewChanges: (w: Workspace) => navigate({ to: "/workspaces/$workspaceId", params: { workspaceId: w.id }, search: { tab: "git" } }),
     rename: async (w: Workspace) => {
       const name = await prompt({ title: "Rename workspace", description: "Only the display name changes; branch and worktree stay the same.", confirmLabel: "Rename", input: { label: "Workspace name", initial: w.name } });
