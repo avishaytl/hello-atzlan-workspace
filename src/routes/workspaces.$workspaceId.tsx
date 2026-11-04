@@ -26,7 +26,7 @@ const TABS = ["overview", "claude", "git", "files", "activity", "settings"] as c
 type Tab = (typeof TABS)[number];
 
 export const Route = createFileRoute("/workspaces/$workspaceId")({
-  validateSearch: (s: Record<string, unknown>): { tab?: Tab } => ({ tab: TABS.includes(s.tab as Tab) ? (s.tab as Tab) : undefined }),
+  validateSearch: (s: Record<string, unknown>): { tab?: Tab } => ({ tab: TABS.includes(s["tab"] as Tab) ? (s["tab"] as Tab) : undefined }),
   head: () => ({
     meta: [
       { title: "Workspace · hello atzlan" },

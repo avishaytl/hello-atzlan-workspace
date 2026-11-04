@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 import type { SessionStatus } from "@/types";
 
 export const Route = createFileRoute("/claude")({
-  validateSearch: (s: Record<string, unknown>): { session?: string } => ({ session: typeof s.session === "string" ? s.session : undefined }),
+  validateSearch: (s: Record<string, unknown>): { session?: string } => ({ session: typeof s["session"] === "string" ? s["session"] : undefined }),
   head: () => ({
     meta: [
       { title: "Claude Sessions · hello atzlan" },

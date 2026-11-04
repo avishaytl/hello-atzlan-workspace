@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import type { Priority, Ticket, TicketStatus } from "@/types";
 
 export const Route = createFileRoute("/tasks")({
-  validateSearch: (s: Record<string, unknown>): { ticket?: string } => ({ ticket: typeof s.ticket === "string" ? s.ticket : undefined }),
+  validateSearch: (s: Record<string, unknown>): { ticket?: string } => ({ ticket: typeof s["ticket"] === "string" ? s["ticket"] : undefined }),
   head: () => ({
     meta: [
       { title: "My Tasks · hello atzlan" },
