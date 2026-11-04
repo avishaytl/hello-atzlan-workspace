@@ -40,7 +40,7 @@ function Overview() {
 
   return (
     <div className="mx-auto max-w-[1600px]">
-      <div className="relative -mx-6 -mt-20 mb-6 px-6 pt-20 pb-2 bg-header-glow">
+      <div className="relative -mx-6 -mt-6 mb-6 rounded-b-3xl px-6 pt-6 pb-2 bg-header-glow">
         <h1 className="text-[30px] font-bold tracking-tight">{greeting()}, Avishay <span aria-hidden>👋</span></h1>
         <p className="mt-0.5 text-[15px] text-muted-foreground">Pick up where you left off.</p>
         <div className="mt-6 grid grid-cols-2 gap-3 xl:grid-cols-4">
