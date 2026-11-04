@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { ChevronRight, Code2, Copy, Diamond, FolderGit2, Loader2, Plus, RotateCcw, Terminal, GitCommitHorizontal } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
@@ -97,7 +97,7 @@ function Card({ title, children, className }: { title: string; children: React.R
   return <section className={cn("rounded-2xl border bg-card p-5 shadow-card", className)}><h2 className="mb-3 text-[15px] font-semibold">{title}</h2>{children}</section>;
 }
 function KV({ items }: { items: [string, React.ReactNode][] }) {
-  return <dl className="grid grid-cols-[130px_1fr] gap-y-2 text-[13px]">{items.map(([k, v]) => <><dt key={k} className="text-muted-foreground">{k}</dt><dd key={k + "v"} className="min-w-0 truncate">{v}</dd></>)}</dl>;
+  return <dl className="grid grid-cols-[130px_1fr] gap-y-2 text-[13px]">{items.map(([k, v]) => <Fragment key={k}><dt className="text-muted-foreground">{k}</dt><dd className="min-w-0 truncate">{v}</dd></Fragment>)}</dl>;
 }
 
 function OverviewTab({ w }: { w: Workspace }) {
