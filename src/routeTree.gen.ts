@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as OverviewRouteImport } from './routes/overview'
 import { Route as WorkspacesIndexRouteImport } from './routes/workspaces.index'
+import { Route as WorkspacesWorkspaceIdRouteImport } from './routes/workspaces.$workspaceId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,34 +29,44 @@ const WorkspacesIndexRoute = WorkspacesIndexRouteImport.update({
   path: '/workspaces/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkspacesWorkspaceIdRoute = WorkspacesWorkspaceIdRouteImport.update({
+  id: '/workspaces/$workspaceId',
+  path: '/workspaces/$workspaceId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/overview': typeof OverviewRoute
+  '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRoute
   '/workspaces/': typeof WorkspacesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/overview': typeof OverviewRoute
+  '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRoute
   '/workspaces': typeof WorkspacesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/overview': typeof OverviewRoute
+  '/workspaces/$workspaceId': typeof WorkspacesWorkspaceIdRoute
   '/workspaces/': typeof WorkspacesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/overview' | '/workspaces/'
+  fullPaths: '/' | '/overview' | '/workspaces/$workspaceId' | '/workspaces/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/overview' | '/workspaces'
-  id: '__root__' | '/' | '/overview' | '/workspaces/'
+  to: '/' | '/overview' | '/workspaces/$workspaceId' | '/workspaces'
+  id:
+    '__root__' | '/' | '/overview' | '/workspaces/$workspaceId' | '/workspaces/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   OverviewRoute: typeof OverviewRoute
+  WorkspacesWorkspaceIdRoute: typeof WorkspacesWorkspaceIdRoute
   WorkspacesIndexRoute: typeof WorkspacesIndexRoute
 }
 
@@ -82,12 +93,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WorkspacesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workspaces/$workspaceId': {
+      id: '/workspaces/$workspaceId'
+      path: '/workspaces/$workspaceId'
+      fullPath: '/workspaces/$workspaceId'
+      preLoaderRoute: typeof WorkspacesWorkspaceIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   OverviewRoute: OverviewRoute,
+  WorkspacesWorkspaceIdRoute: WorkspacesWorkspaceIdRoute,
   WorkspacesIndexRoute: WorkspacesIndexRoute,
 }
 export const routeTree = rootRouteImport
